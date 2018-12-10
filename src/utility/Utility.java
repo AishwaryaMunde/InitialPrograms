@@ -1685,6 +1685,34 @@ public class Utility
 		 			System.out.println();
 		 		}
 			}	 
+		
+		 /****************Prime anagram Queue***********************/
+		  
+		 public void primeAnagramQueue()
+		 {
+			 PrimeAnagramQueue queue = new PrimeAnagramQueue();
+			 int[] primeNumber = printingPrimeNumber(1000);
+				int[] anagram = Utility.checkAnagram(primeNumber);
+				for(int i = 0 ; i<anagram.length;i++)
+				{
+					if(anagram[i]>0)
+					{
+						queue.insertInDeque(anagram[i]);
+					}
+				}
+				queue.displayFront();
+				int[] removed = new int[queue.length];
+				System.out.println("Remove elements from queue(linked list) are: ");
+				for(int i =0; i<queue.length;i++)
+				{
+					removed[i] = queue.removeAtFront();
+					//queue.displayFront();
+				}
+				for(int i =0; i<removed.length;i++)
+				{
+					System.out.print(removed[i] +" ");
+				}		
+		 } 
 
 }
 
