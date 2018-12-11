@@ -2,7 +2,7 @@ package datastructure;
 
 import utility.Utility;
 
-public class PrimeAnagramMain
+public class PrimeAnagramQueueMain
 {
 	public static void main(String[] args) 
 	{

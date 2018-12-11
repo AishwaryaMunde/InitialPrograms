@@ -1713,6 +1713,38 @@ public class Utility
 					System.out.print(removed[i] +" ");
 				}		
 		 } 
-
+		 
+	/**********************Prime Anagram Stack************************/
+		 
+		 public void primeAnagramStack()
+		 {
+			int[] primeNumber = printingPrimeNumber(1000);
+			int[] anagram = Utility.checkAnagram(primeNumber);
+			PrimeAnagramStackMethod stack = new PrimeAnagramStackMethod();
+			System.out.println("Prime anagram number After push into stack :");
+			for(int i = 0;i<anagram.length;i++)
+			{
+				if(anagram[i]>0)
+				{				
+					System.out.print(stack.push(anagram[i])+" ");
+				}
+			}		
+			
+			System.out.println("\nTop = "+stack.peek());
+			int[] stackPop = new int[anagram.length];
+			System.out.println("\nPrime anagram number After pop from stack :");
+			try
+			{
+				for(int  i=0 ; i<stackPop.length;i++)
+				{
+					stackPop[i] = stack.pop();
+					System.out.print(stackPop[i]+" ");
+				}
+			}
+			catch(Exception e)
+			{
+				System.out.println(e);
+			}
+		 }
 }
 
