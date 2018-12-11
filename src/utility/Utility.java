@@ -1604,7 +1604,45 @@ public class Utility
 	 		}
 	 		
 		}	
-	
+	/**********************Calender Queue*****************************/
+		 
+		public void calenderQueue(int month , int year)
+		{
+			String[] Month = {"January","February", "March","April", "May", "June","July", "August", "September",
+		            	"October", "November", "December"};
+			int[] noOfDays  = {0,31,28,31,30,31,30,31,31,30,31,30,31};
+			int result = Utility.dayOfWeek(month, 1, year);
+			CalenderQueueMethod deque = new CalenderQueueMethod();
+			System.out.println("   \t\t\t"+Month[month-1]+" "+year);
+			if( month == 2 && leapforCalender(year) )
+			{
+				noOfDays[2] = 29;
+			}									
+			System.out.println("\tS\tM\tTu\tW\tTh\tF\tSa");
+	 		for(int i = 0 ;i<result ; i++)
+	 		{
+	 			//System.out.print("   ");
+	 			deque.insertInDeque("\t");
+	 		}
+	 		for(int i=1;i<=noOfDays[month];i++)
+			{
+			if(i<=9)
+			{
+				deque.insertInDeque("\t"+i);
+			}
+			else if(i>9)
+			{
+				deque.insertInDeque("\t"+i);
+			}
+			
+			if((result+i)%7==0)
+				deque.insertInDeque("\n");
+				//System.out.println();
+	 		}
+	 		deque.displayFront();
+		}
+		
+		
 	/********************PrimeNumber in 2d array ***********************/
 		
 		public void twoDPrime(int[] primenumber)
