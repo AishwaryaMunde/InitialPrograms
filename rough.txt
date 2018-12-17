@@ -1,0 +1,203 @@
+mappper : Link
+https://www.concretepage.com/jackson-api/read-write-json-using-jackson-objectmapper-jsonparser-jsongenerator-example
+
+
+/*JSONParser parser = new JSONParser();
+		JSONObject fileobj = (JSONObject) parser.parse(new FileReader("Patient.json"));
+		JSONArray array = (JSONArray)fileobj.get("Patient List");
+		System.out.println(array);*/
+
+ObjectMapper mapper=new ObjectMapper();
+		//ypeReference<Map<String,Object>>(){});
+		
+		List<CliniqueConstructor> list=mapper.readValue(new File("Patient.json"), 
+				new TypeReference<List<CliniqueConstructor>>(){});	
+	
+
+
+public void addDoctor() throws IOException, ParseException
+	{
+		
+
+		/*FileWriter file =null; 
+		try
+		{
+			file =new FileWriter(new File("Doctor.json"),true);
+			file.write(obj.toString());
+			file.flush();
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+		System.out.println(obj);*/
+	}
+
+
+
+
+
+public void addDoctor() throws IOException, ParseException
+	{
+		CliniqueConstructor doc = new CliniqueConstructor();
+		System.out.println("Enter doctor name :");
+		String docName = scanner.nextLine();
+		doc.setDocName(docName);
+		System.out.println("Enter doctor id :");
+		String docId = scanner.nextLine();
+		doc.setDocId(docId);
+		System.out.println("Enter doctor specialization");
+		String docSpec = scanner.nextLine();
+		doc.setSpecialization(docSpec);
+		System.out.println("Enter doctor availability");
+		String aval = scanner.nextLine();
+		doc.setAvailability(aval);
+		createjsonDoc(doc);
+
+		/*FileWriter file =null; 
+		try
+		{
+			file =new FileWriter(new File("Doctor.json"),true);
+			file.write(obj.toString());
+			file.flush();
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+		System.out.println(obj);*/
+	}
+	public void createjsonDoc(DoctorInfo doc) throws IOException {
+		JSONObject simple = new JSONObject();
+		
+		simple.put("DoctorName", doc.getDocName());
+		simple.put("DocId", doc.getDocId());
+		simple.put("Specialization",doc.getSpecialization());
+		simple.put("Availability",doc.getAvailability());
+		docFileArr.add(simple);
+		docFileObj.put("DoctorList",docFileArr);
+		writeIntoFile(doctorFilePath,docFileObj);
+	}
+
+	@SuppressWarnings("unchecked")
+	public void addPatient() throws Exception
+	{
+		ObjectMapper mapper=new ObjectMapper();
+		//ypeReference<Map<String,Object>>(){});
+		
+		List<CliniqueConstructor> list=mapper.readValue(new File("Patient.json"), 
+				new TypeReference<List<CliniqueConstructor>>(){});	
+		
+		System.out.println("Enter Patient name : ");
+		String patientName = scanner.next();
+		System.out.println("Enter Patient Id : ");
+		String patientId = scanner.next();
+		System.out.println("Enter Patient Mobile Number : ");
+		String mobNo = scanner.next();
+		System.out.println("Enter Patient Age : ");
+		String patientage = scanner.next();
+		JSONObject patientObj = new JSONObject();
+		patientObj.put("Patient name", patientName);
+		patientObj.put("Patient Id", patientId);
+		patientObj.put("Patient Mobile Number", mobNo);
+		patientObj.put("Patient Age", patientage);		
+		
+		FileWriter file =null; 
+		try
+		{
+			file =new FileWriter(new File("Patient.json"),true);
+			file.write(patientObj.toString());
+			file.flush();
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+		System.out.println(patientObj);
+	}
+
+
+
+
+
+	public void searchForPatient() throws Exception
+	{
+		//System.out.println(patientObj);
+		System.out.println("Enter which way you wants to search for Patient : ");
+		System.out.println("1.By Name\n2.By Id\n3.By Mobile No.");
+		System.out.println("Enter your choice :");
+		int ch = scanner.nextInt();
+		switch(ch)
+		{
+		case 1: 
+			System.out.println("Enter Patient Name : ");
+			String patientName = scanner.next();
+			patientSearch(patientName);
+			break;
+		case 2:
+			System.out.println("Enter Patient Id ");
+			String patientid = scanner.next();
+			patientSearch(patientid);
+			break;
+		case 3: 
+			System.out.println("Enter Patient Mobile no.");
+			String mobno = scanner.next();
+			patientSearch(mobno);
+			break;
+		default : 
+			System.out.println("Invalid choice ....!!!");
+			break;
+		}
+	}
+	
+	public void doctorSearch(String search ) throws Exception
+	{
+		JSONParser parser = new JSONParser();
+		JSONObject fileobj = (JSONObject) parser.parse(new FileReader("Doctor.json"));
+		JSONArray patientArray = (JSONArray)fileobj.get("Doctors List") ;
+		JSONObject compareObj ;
+		for(int i = 0 ; i < patientArray.size();i++)
+		{
+			compareObj = (JSONObject)patientArray.get(i);
+			String name = (String)compareObj.get("Doctor Name");
+			String id = (String)compareObj.get("Doctor Id");
+			String specialization = (String)compareObj.get("Doctor Specialization");
+			String availability = (String)compareObj.get("Doctor Availabilty");
+			
+			if((name.equals(search))||(id.equals(search))||(specialization.equals(search))||(availability.equals(search)))
+			{
+				System.out.println(compareObj);
+			}
+		}
+	}
+	public void patientSearch(String search ) throws Exception
+	{
+		JSONParser parser = new JSONParser();
+		JSONObject fileobj = (JSONObject) parser.parse(new FileReader("Patient.json"));
+		JSONArray patientArray = (JSONArray)fileobj.get("Patient List") ;
+		JSONObject compareObj ;
+		for(int i = 0 ; i < patientArray.size();i++)
+		{
+			compareObj = (JSONObject)patientArray.get(i);
+			String name = (String)compareObj.get("Patient Name").toString();
+			String id = (String)compareObj.get("Patient Id").toString();
+			String mobno = (String)compareObj.get("Patient Mobile no").toString();
+			if((name.equals(search))||(id.equals(search))||(mobno.equals(search)))
+			{
+				System.out.println(compareObj);
+			}
+			else
+				System.out.println("Doctor is Not Present in List : ");
+		}
+	}
+
+
+
+
+
+
+
+	
+
+
+	
