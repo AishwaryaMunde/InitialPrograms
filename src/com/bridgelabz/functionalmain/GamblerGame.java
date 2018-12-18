@@ -15,5 +15,4 @@ public class GamblerGame
 		int bets=0,win=0;
 		utility.playthegame(n, stake, goal, bets, win);
 	}
-
 }
