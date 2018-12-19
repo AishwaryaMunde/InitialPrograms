@@ -39,5 +39,92 @@ public class AdapterDesignPattern
 		default: return sockAdapter.get120volt();
 		}
 	}
-
 }
+
+interface SocketAdapter
+{
+	public VoltForAdapterPattern get120volt();
+	
+	public VoltForAdapterPattern get12Volt();
+	
+	public VoltForAdapterPattern get3Volt();
+	
+}
+
+class SocketClassAdapterImpl extends SocketForAdapterPattern implements SocketAdapter
+{
+
+	@Override
+	public VoltForAdapterPattern get120volt() {
+		return getVolt();
+	}
+
+	@Override
+	public VoltForAdapterPattern get12Volt() {
+		VoltForAdapterPattern v= getVolt();
+		return convertVolt(v,10);
+	}
+
+	private VoltForAdapterPattern convertVolt(VoltForAdapterPattern v, int i) {
+		return new VoltForAdapterPattern(v.getVolts()/i);
+	}
+
+	@Override
+	public VoltForAdapterPattern get3Volt() {
+		VoltForAdapterPattern v= getVolt();
+		return convertVolt(v,40);
+	}
+}
+class SocketForAdapterPattern
+{
+	public VoltForAdapterPattern getVolt()
+	{
+		return new VoltForAdapterPattern(120);
+	}
+}
+
+class VoltForAdapterPattern 
+{
+	private int volts;
+
+	public VoltForAdapterPattern(int volts) {
+		super();
+		this.volts = volts;
+	}
+
+	public int getVolts() {
+		return volts;
+	}
+
+	public void setVolts(int volts) {
+		this.volts = volts;
+	}
+}
+
+class SocketObjectAdapterImpl implements SocketAdapter 
+{
+
+private SocketForAdapterPattern sock = new SocketForAdapterPattern();
+	
+	@Override
+	public VoltForAdapterPattern get12Volt() {
+		VoltForAdapterPattern v= sock.getVolt();
+		return convertVolt(v,10);
+	}
+
+	@Override
+	public VoltForAdapterPattern get3Volt() {
+		VoltForAdapterPattern v= sock.getVolt();
+		return convertVolt(v,40);
+	}
+	
+	private VoltForAdapterPattern convertVolt(VoltForAdapterPattern v, int i) {
+		return new VoltForAdapterPattern(v.getVolts()/i);
+	}
+
+	@Override
+	public VoltForAdapterPattern get120volt() {
+		return sock.getVolt();
+	}
+}
+

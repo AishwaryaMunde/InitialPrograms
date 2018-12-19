@@ -1,7 +1,7 @@
 package com.bridgelabz.objectoriented;
 import com.bridgelabz.utility.Utility;
 
-public class Inventory 
+public class InventoryFirst 
 {
 	public static void main(String[] args) 
 	{ 

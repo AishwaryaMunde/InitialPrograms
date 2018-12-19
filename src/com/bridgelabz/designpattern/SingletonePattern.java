@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 public class SingletonePattern
 {
+	@SuppressWarnings({ "unused", "resource" })
 	public static void main(String[] args) throws Exception 
 	{		
 		EagerInitialization eager = EagerInitialization.getInstance();
@@ -144,6 +145,7 @@ enum EnumSingletone
 		System.out.println("i = "+i);
 	}
 }
+@SuppressWarnings("serial")
 class SerializedSingleton implements Serializable
 {
 
