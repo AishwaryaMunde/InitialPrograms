@@ -6,7 +6,7 @@ public class FacadeDesignPattern
 {
 	public static void main(String[] args) {
 		String tableName="Employee";
-		System.out.println(tableName);
+		
 		//generating MySql HTML report and Oracle PDF report without using Facade
 		Connection con = MySqlHelper.getMySqlDBConnection();
 		MySqlHelper mySqlHelper = new MySqlHelper();
@@ -26,32 +26,32 @@ class MySqlHelper
 {
 	
 	public static Connection getMySqlDBConnection(){
-		//get MySql DB connection using connection parameters
+		System.out.println("This is SQL database connection");
 		return null;
 	}
 	
 	public void generateMySqlPDFReport(String tableName, Connection con){
-		//get data from table and generate pdf report
+		System.out.println("Generating SQL PDF report");
 	}
 	
 	public void generateMySqlHTMLReport(String tableName, Connection con){
-		//get data from table and generate pdf report
+		System.out.println("Generating SQL HTML report");
 	}
 }
 
 class OracleHelper {
 
 	public static Connection getOracleDBConnection(){
-		//get Oracle DB connection using connection parameters
+		System.out.println("This is oracle database connection");
 		return null;
 	}
 	
 	public void generateOraclePDFReport(String tableName, Connection con){
-		//get data from table and generate pdf report
+		System.out.println("Generating Oracle PDF report");
 	}
 	
 	public void generateOracleHTMLReport(String tableName, Connection con){
-		//get data from table and generate pdf report
+		System.out.println("Generating Oracle HTML report");
 	}
 	
 }
@@ -85,11 +85,11 @@ class HelperFacade {
 				break;
 			}
 			break;
-		}
-		
+		}		
 	}
 	
-	public static enum DBTypes{
+	public static enum DBTypes
+	{
 		MYSQL,ORACLE;
 	}
 	
