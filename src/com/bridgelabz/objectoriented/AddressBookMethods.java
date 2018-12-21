@@ -149,7 +149,7 @@ public class AddressBookMethods
 			if(compareObj.get("First Name").equals(personName))
 			{
 				compareObj.put(parameterTobeReplace,newParameter);
-				System.out.println("New UPdatetion");
+				System.out.println("New Updatetion");
 			}
 		}
 		addrArrayContainObj.put("AddressBook",addressArray);

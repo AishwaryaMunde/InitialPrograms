@@ -11,8 +11,8 @@ public class DeckOfCardQueue
 		int noOfCards = 9;
 		String[] init = utility.assignCards();
 		String[] shuffleCards = utility.shuffleCards(init);
-		String[][] distributedshuffle = utility.distributedCards(shuffleCards, noOfPlayer, noOfCards);
+		String[][] distributedShuffle = utility.distributedCards(shuffleCards, noOfPlayer, noOfCards);
 		System.out.println("Players Cards After Sorting ");
-		utility.deckOfCardsQueue(distributedshuffle, noOfPlayer, noOfCards);
+		utility.deckOfCardsQueue(distributedShuffle, noOfPlayer, noOfCards);
 	}	
 }

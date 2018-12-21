@@ -1626,7 +1626,7 @@ public class Utility
 			return fact;
 		}
 	
-	/****************************Calender**********************/
+	/*******************************Calender***************************/
 		
 		
 		/**This method check that entered year is leap 
@@ -2046,7 +2046,7 @@ public class Utility
 		{
 			for(int j=0;j<rank.length;j++)
 			{
-				deckOfCards[index++]=card[i]+" "+rank[j];
+				deckOfCards[index++]=rank[j]+" "+card[i];
 			}
 		}
 		System.out.println("\n********Before shuffle******** ");
@@ -2113,12 +2113,12 @@ public class Utility
 
 	/*************************Deck of cards Queue******************************/
 	
-	public String[] deckOfCardsQueue(String[][] deckOfCards ,int noOfPlayers, int noOfCards)
+	public String[][] deckOfCardsQueue(String[][] deckOfCards ,int noOfPlayers, int noOfCards)
 	{
 		DeckOfCardsQLL queue = new DeckOfCardsQLL();
 		int cnt=1;
-		String[] cards = new String[noOfCards];
-		for(int i=0; i < noOfPlayers;i++)
+		//String[] cards = new String[noOfCards];
+		/*for(int i=0; i < noOfPlayers;i++)
 		{
 			for(int j=0;j<noOfCards;j++)
 			{
@@ -2128,27 +2128,41 @@ public class Utility
 			queue.enqueue("Player "+(i+1)+" Cards");
 			sortCards(cards);
 			System.out.println();
-		}
-		return cards;
+		}*/
+		sortCards(deckOfCards);
+		return deckOfCards;
 	}
 	
-	public void sortCards(String[] cards)
+	public void sortCards(String[][] cardsArray)
 	{
 		DeckOfCardsQLL queue = new DeckOfCardsQLL();
-		char[] numberRank = {'2','3','4','5','6','7','8','9','0','J','Q','K','A'};		
-		for(i = 0 ; i < numberRank.length;i++)
+		int[] numberRank=new int[cards.length];
+		String[] deckOfCards= assignCards();
+		int j=0;
+		for(String cards: cardsArray)
 		{
-			for(j = 0 ; j < cards.length;j++)
+			for(int i=0; i<deckOfCards.length; i++)
 			{
-				String card = cards[j];
-				char cardRank = card.charAt(card.length()-1);
-				if(cardRank == numberRank[i]) 
+				
+				if(card.equals(deckOfCards[i]))
 				{
-					queue.enqueue(card);
+					numberRank[j++]=i;
 				}
-			}				
+			}
 		}
-		queue.show();
+		for(String card:cards)
+		{
+			for(int i=0; i<numberRank.length; i++)
+			{
+				card=deckOfCards[numberRank[i]];
+			}
+		}
+		for(int i=0;i<cards.length;i++)
+		{
+			System.out.print(cards[i]+"");
+		}
+		
+		//queue.show();
 	}
 }
 

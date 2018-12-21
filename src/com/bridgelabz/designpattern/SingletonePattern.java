@@ -13,6 +13,7 @@ public class SingletonePattern
 	{		
 		EagerInitialization eager = EagerInitialization.getInstance();
 		LazyInitialization lazy = LazyInitialization.getInstance();
+		LazyInitialization lazy2 = LazyInitialization.getInstance();
 		StaticBlockSingleton staticinstance = StaticBlockSingleton.getInstance();		
 		Thread t1 = new Thread(new Runnable() {
 			public void run()
@@ -49,7 +50,6 @@ public class SingletonePattern
 
 class StaticBlockSingleton 
 {
-
     private static StaticBlockSingleton staticinstance;
     
     private StaticBlockSingleton()

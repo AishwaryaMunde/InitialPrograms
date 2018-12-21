@@ -1,0 +1,118 @@
+DeckOfCardsQLL queue = new DeckOfCardsQLL();
+		String[] numberRank = {"Ace","2","3","4","5","6","7","8","9","10","Jack","Queen","King"};		
+		for(i = 0 ; i < numberRank.length;i++)
+		{
+			for(j = 0 ; j < cards.length;j++)
+			{
+				String card = cards[j];
+				//char cardRank = card.charAt(j);
+				if(card.compareTo(numberRank[i])==0) 
+				{
+					queue.enqueue(card);
+				}
+			}				
+		}
+		queue.show();
+
+
+
+
+
+
+
+
+
+char[] rank = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'J', 'Q', 'K' };
+		for (int i = 0; i < rank.length; i++) {
+			for (int j = 0; j < cards.length; j++) {
+				String card = cards[j];
+				String compareCards = stringCards(card); 
+				/*
+*/				char cardRank = compareCards.charAt(card.length() - 1);
+				if (cardRank == rank[i])
+					queue.Enqueue(card);
+			}
+		}
+	}
+	public static String stringCards(String card)
+	{
+		if(card == "Jack")
+			card = "11";
+		else if(card == "Queen")
+			card = "12";
+		else if(card == "King")
+			card = "13";
+		else if(card == "Ace")
+			card = "14";
+		return card;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public void sortCards(String[] cards)
+	{
+		DeckOfCardsQLL queue = new DeckOfCardsQLL();
+		//String[] numberRank = {"Ace","2","3","4","5","6","7","8","9","0","Jack","Queen","King"};
+		
+		char[] numberRank = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'J', 'Q', 'K' };
+		for(i = 0 ; i < numberRank.length;i++)
+		{
+			for(j = 0 ; j < cards.length;j++)
+			{
+				String card = cards[j];
+				char cardRank = card.charAt(card.length()-1);
+				if(cardRank == numberRank[i])
+				{
+					queue.enqueue(card);
+				}
+			}				
+		}
+		queue.show();
+	}
+
+
+
+
+
+
+
+
+
+Random r=new Random();
+				int r1=r.nextInt(52);
+				int r2=r.nextInt(52);
+//				int random = (int)(Math.random()*52);
+				String temp = deckOfCards[r1];
+				deckOfCards[r1] = deckOfCards[r2];
+				deckOfCards[r2] = temp;
+
+
+
+DeckOfCardsQLL queue = new DeckOfCardsQLL();
+		String[] numberRank = {"Ace","2","3","4","5","6","7","8","9","0","Jack","Queen","King"};
+		//char[] numberRank = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'J', 'Q', 'K' };
+		for(i = 0 ; i < numberRank.length;i++)
+		{
+			for(j = 0 ; j < cards.length;j++)
+			{
+				String card = cards[j];
+				//char cardRank = card.charAt(card.length()-1);*/
+				if(card.equals(numberRank[i]))
+				{
+					queue.enqueue(card);
+				}
+			}				
+		}
+		queue.show();
