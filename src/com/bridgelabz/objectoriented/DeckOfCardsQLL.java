@@ -27,8 +27,7 @@ public class DeckOfCardsQLL
 	}
 	
 	public void dequeue() 
-	{
-		// TODO Auto-generated method stub		
+	{		
 		Node withdrawl ;
 		if(isEmpty())
 		{

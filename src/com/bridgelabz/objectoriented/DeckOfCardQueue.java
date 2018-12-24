@@ -13,6 +13,6 @@ public class DeckOfCardQueue
 		String[] shuffleCards = utility.shuffleCards(init);
 		String[][] distributedShuffle = utility.distributedCards(shuffleCards, noOfPlayer, noOfCards);
 		System.out.println("Players Cards After Sorting ");
-		utility.deckOfCardsQueue(distributedShuffle, noOfPlayer, noOfCards);
+		Utility.deckOfCardsQueue(distributedShuffle, noOfPlayer, noOfCards);
 	}	
 }

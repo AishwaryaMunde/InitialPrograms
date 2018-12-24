@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import org.json.simple.JSONArray;
@@ -116,121 +117,188 @@ public class CommercialStockMethods
 		System.out.println(jsonObj);
 		writeIntoFile(jsonObj ,userFilePath );
 	}	
-	
-	/*JSONObject compareObj;
-	
-	*/
-	
+
+	@SuppressWarnings("unchecked")
 	public void buyStock() throws Exception
 	{
-		File file = new File(companyFilePath);
-		JSONParser parser = new JSONParser();
-		JSONObject jsonObj = (JSONObject)parser.parse(new FileReader(file));
-		JSONArray jsonArray = (JSONArray)jsonObj.get("StockDetails");
-		System.out.println("Enter user name");
+		File file1 = new File(companyFilePath);
+		JSONParser parser1 = new JSONParser();
+		JSONObject jsonObj1 = (JSONObject)parser1.parse(new FileReader(file1));
+		JSONArray array1 = (JSONArray)jsonObj1.get("StockDetails"); 
+		System.out.println(array1);
+		boolean isUserPresent = false;
+		boolean isStockPresent = false;
+		File file2 = new File(userFilePath);
+		JSONParser parser2 = new JSONParser();
+		JSONObject jsonObj2 = (JSONObject)parser2.parse(new FileReader(file2));
+		JSONArray array2 = (JSONArray)jsonObj2.get("UserDetails");
+		System.out.println(array2);
+		JSONObject compareObj1;
+		JSONObject compareObj2;
+		System.out.println("Enter User name : ");
 		String userName = utility.inputString();
-		boolean isAvailble = checkPersonAvailability(userName);
-		JSONObject obj;
-		if(isAvailble)
+		for(int i = 0;i<array2.size();i++)
 		{
-			for(int i = 0 ; i < jsonArray.size();i++)
+			compareObj2 = (JSONObject)array2.get(i);
+			if(compareObj2.get("UserName").equals(userName))
 			{
-				obj = (JSONObject)jsonArray.get(i);
-				System.out.println((i+1)+" : "+obj);
-			}
-			System.out.println("Enter Stock name from given list whose stocks you want to buy");
-			String stockName = utility.inputString();
-			JSONObject compareObj;
-			for(int i=0;i<jsonArray.size();i++)
-			{
-				compareObj = (JSONObject)jsonArray.get(i);
-				if(compareObj.get("StockName").equals(stockName))
+				isUserPresent = true;
+				System.out.print(compareObj2);
+				System.out.println("\nFollowing is available stock list");
+				for(i=0 ; i<array1.size();i++)
 				{
-					System.out.println(compareObj);
-					//System.out.println("share for "+stockName+" "+compareObj.get("NoOfShare"));
-					System.out.println("Enter how many you wants buy : ");
-					int noOfShares = utility.inputInteger();	
-					/*int totalShare = (int)compareObj.get("NoOfShare");
-					System.out.println(totalShare);*/
+					compareObj1 = (JSONObject)array1.get(i);
+					System.out.println(compareObj1);
 				}
-			}	
-		}
-		else
-		{
-			System.out.println("Entered user is not available in list");
-			System.out.println("Do you want to register this user (Y/N) ");
-			char ch = scanner.next().charAt(0);
-			if(ch == 'Y' || ch == 'y')
-			{
-				addUser();
-				System.out.println("User Registered Successfully");
-			}
-			System.out.println("Now you want to buy stock (Y/N)");
-			char ch1 = scanner.next().charAt(0);
-			if(ch1 == 'Y' || ch1 == 'y')
-			{
-				buyStock();
-			}
-		}
-	}
-	public boolean checkPersonAvailability(String userName) throws Exception
-	{
-		boolean isPresent = false;
-		File file = new File(userFilePath);
-		JSONParser parser = new JSONParser();
-		JSONObject jsonObj = (JSONObject)parser.parse(new FileReader(file));
-		JSONArray jsonArray = (JSONArray)jsonObj.get("UserDetails");
-		JSONObject compareObj;
-		for(int i=0;i<jsonArray.size();i++)
-		{
-			compareObj = (JSONObject)jsonArray.get(i);
-			if(compareObj.get("UserName").equals(userName))
-			{
-				isPresent = true;
-			}
-		}
-		return isPresent;		
-	}	
-	/*public boolean searchStockName(String stockName) throws Exception
-	{
-		boolean stockNameAvailable = false;
-		File file = new File(companyFilePath);
-		JSONParser parser = new JSONParser();
-		JSONObject jsonObj = (JSONObject)parser.parse(new FileReader(file));
-		JSONArray jsonArray = (JSONArray)jsonObj.get("StockDetails");
-		JSONObject compareObj;
-		for(int i=0;i<jsonArray.size();i++)
-		{
-			compareObj = (JSONObject)jsonArray.get(i);
-			if(compareObj.get("StockName").equals(stockName))
-			{
-				System.out.println(compareObj);
-				stockNameAvailable = true;
+				System.out.println("Enter Stock Name from above list ");
+				String stockName = utility.inputString();
+				for(i=0 ; i<array1.size();i++)
+				{
+					compareObj1 = (JSONObject)array1.get(i);
+					if(compareObj1.get("StockName").equals(stockName)) 
+					{
+						isStockPresent = true;
+						System.out.println(compareObj1);
+						System.out.println("Enter how many stocks you want to buy");
+						int stocksToBuy = utility.inputInteger();
+						
+						int companyIntStocks = Integer.parseInt(compareObj1.get("NoOfShare").toString());
+						int userIntStocks = Integer.parseInt(compareObj2.get("NoOfShare").toString());
+						int userSharePrice = Integer.parseInt(compareObj2.get("SharePrice").toString());
+						int companySharePrice = Integer.parseInt(compareObj1.get("SharePrice").toString());
+						
+						int newUserShares = userIntStocks + stocksToBuy;
+						int newCompanyShares = companyIntStocks - stocksToBuy;
+						
+						int priceOfEachShare = companySharePrice / companyIntStocks;
+						int newStockCalculation = (priceOfEachShare * stocksToBuy);
+						int newComapnySharePrice=  companySharePrice + newStockCalculation ;						
+						int newUserSharePrice = userSharePrice - newStockCalculation;
+						
+						if(companyIntStocks > stocksToBuy && userSharePrice > newStockCalculation)
+						{						
+							compareObj1.remove("NoOfShare");
+							compareObj2.remove("NoOfShare");
+							compareObj1.remove("SharePrice");
+							compareObj2.remove("SharePrice");
+							
+							compareObj1.put("NoOfShare", newCompanyShares);
+							compareObj2.put("NoOfShare", newUserShares);
+							compareObj1.put("SharePrice", newComapnySharePrice);
+							compareObj2.put("SharePrice", newUserSharePrice);
+							
+							System.out.println(compareObj1);
+							System.out.println(compareObj2);
+						}
+						else
+							System.out.println("Sorry.!!! Insufficient amount or shares not available....");
+					}
+				}
 			}
 		}
-		return stockNameAvailable;		
-	}*/
-	public void sellStock() throws Exception
-	{
-		File file = new File(userFilePath);
-		JSONParser parser = new JSONParser();
-		JSONObject jsonObj = (JSONObject)parser.parse(new FileReader(file));
-		JSONArray jsonArray = (JSONArray)jsonObj.get("UserDetails");
-		System.out.println("Enter user name");
-		String userName = utility.inputString();
-		JSONObject compareObj;
-		for(int i=0;i<jsonArray.size();i++)
+		/*if(isStockPresent == false)
 		{
-			compareObj = (JSONObject)jsonArray.get(i);
-			if(compareObj.get("UserName").equals(userName))
-			{
-				System.out.println(compareObj);
-				System.out.println("Enter how many shares you wants to sell ?  ");
-				int sharesToSell = utility.inputInteger();
-				System.out.println("Enter Price Of Each Share");
-				int priceOfEachShare = utility.inputInteger();
-			}
-		}		
+			System.out.println("Entered stock name is not available in given list ");
+		}
+		if(isUserPresent == false)
+		{
+			System.out.println("User is present not in database");
+		}*/
+		writeIntoFile(jsonObj1, companyFilePath);
+		writeIntoFile(jsonObj2, userFilePath);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public void sellStock() throws Exception
+	{
+
+		File file1 = new File(companyFilePath);
+		JSONParser parser1 = new JSONParser();
+		JSONObject jsonObj1 = (JSONObject)parser1.parse(new FileReader(file1));
+		JSONArray array1 = (JSONArray)jsonObj1.get("StockDetails"); 
+		System.out.println(array1);
+		boolean isUserPresent = false , isStockPresent = false;		
+		File file2 = new File(userFilePath);
+		JSONParser parser2 = new JSONParser();
+		JSONObject jsonObj2 = (JSONObject)parser2.parse(new FileReader(file2));
+		JSONArray array2 = (JSONArray)jsonObj2.get("UserDetails");
+		System.out.println(array2);
+		JSONObject compareObj1;
+		JSONObject compareObj2;
+		System.out.println("Enter User name : ");
+		String userName = utility.inputString();
+		for(int i = 0;i<array2.size();i++)
+		{
+			compareObj2 = (JSONObject)array2.get(i);
+			if(compareObj2.get("UserName").equals(userName))
+			{
+				//isUserPresent = true;
+				System.out.print("\t"+compareObj2);
+				System.out.println("Following is available stock list");
+				for(i=0 ; i<array1.size();i++)
+				{
+					compareObj1 = (JSONObject)array1.get(i);
+					System.out.println(compareObj1);
+				}
+				System.out.println("Enter name of stock to whom you want to buy shares ");
+				String stockName = utility.inputString();
+				for(i = 0 ; i<array1.size();i++)
+				{
+					compareObj1 = (JSONObject)array1.get(i);
+					if(compareObj1.get("StockName").equals(stockName))
+					{
+						//isStockPresent = true;
+						System.out.println(compareObj1);						
+						System.out.println("How many shares you wants to sell ? ");
+						int sellShares = utility.inputInteger();
+						
+						int companyIntStocks = Integer.parseInt(compareObj1.get("NoOfShare").toString());
+						int userIntStocks = Integer.parseInt(compareObj2.get("NoOfShare").toString());
+						int userSharePrice = Integer.parseInt(compareObj2.get("SharePrice").toString());
+						int companySharePrice = Integer.parseInt(compareObj1.get("SharePrice").toString());
+												
+						int newUserShares = userIntStocks - sellShares;
+						int newCompanyShares = companyIntStocks + sellShares;							
+						
+						int priceOfEachUserShares = userSharePrice / userIntStocks; 
+						int newShareCalculation =  priceOfEachUserShares * sellShares;
+						int newUserSharePrice = userSharePrice + newShareCalculation;
+						int newCompanySharePrice = companySharePrice - newShareCalculation ; 
+						
+						if(sellShares < userIntStocks && newShareCalculation < companySharePrice )
+						{
+							compareObj1.remove("NoOfShare");
+							compareObj2.remove("NoOfShare");
+							compareObj1.remove("SharePrice");
+							compareObj2.remove("SharePrice");
+							
+							compareObj1.put("NoOfShare", newCompanyShares);
+							compareObj2.put("NoOfShare", newUserShares);
+							compareObj1.put("SharePrice", newCompanySharePrice);
+							compareObj2.put("SharePrice", newUserSharePrice);
+							
+							System.out.println(compareObj1);
+							System.out.println(compareObj2);		
+						}
+						/*if(isStockPresent == false)
+							System.out.println("Entered stock name is not available in given list ");
+						if(isUserPresent == false)
+							System.out.println("User is present in database");*/
+					}
+				}	
+			}
+		}
+		
+		writeIntoFile(jsonObj1, companyFilePath);
+		writeIntoFile(jsonObj2, userFilePath);
+	}
+	
+	public void printReport(String filePath , String arrayName) throws Exception
+	{
+		File file = new File(filePath);
+		JSONParser parser = new JSONParser();
+		JSONObject jsonObj = (JSONObject)parser.parse(new FileReader(file));
+		JSONArray array = (JSONArray)jsonObj.get(arrayName);
+		System.out.println(array);
+	}
 }

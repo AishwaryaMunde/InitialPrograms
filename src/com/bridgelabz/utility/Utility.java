@@ -28,7 +28,6 @@ import com.bridgelabz.objectoriented.DeckOfCardsQLL;
 
 public class Utility
 {
-		/**************String Replace *****************/
 	
 		Scanner scanner = new Scanner(System.in);
 		
@@ -59,7 +58,8 @@ public class Utility
 			// TODO Auto-generated method stub
 			return scanner.nextDouble();
 		}
-		
+
+	/************************String Replace **************************/
 		/**
 		 * This method replaces the template with the given input string
 		 * 
@@ -75,61 +75,62 @@ public class Utility
 				return output;
 			}
 		}
-		/************************Flip Coin**********************/
+	/****************************Flip Coin******************************/
+		
 		static Random random = new Random(); //Random function to
 		//to generate random numbers
 
-	/**This method generate random numbers and check whether 
-	* it is head or tail
-	* @param no_of_times is the range..and till that range
-	* you have to generate random numbers.
-	*/
-	public void HeadOrTail( int no_of_times)
-	{
-		long headpercentage=0 , tailpercentage=0;
-		int headcount=0 , tailcount=0;
-		//recursion method to enter valid input
-		if(no_of_times<0)
+		/**This method generate random numbers and check whether 
+		* it is head or tail
+		* @param no_of_times is the range..and till that range
+		* you have to generate random numbers.
+		*/
+		public void HeadOrTail( int no_of_times)
 		{
-				System.out.println("Please enter valid input :");
-				no_of_times=scanner.nextInt();
-				HeadOrTail(no_of_times);
-		}
-		for(int i=0;i<no_of_times;i++)
-		{
-			double	randNumber = Math.random();
-			System.out.println("Random numbers are\t :"+randNumber);
-			if(randNumber<0.5)
+			long headpercentage=0 , tailpercentage=0;
+			int headcount=0 , tailcount=0;
+			//recursion method to enter valid input
+			if(no_of_times<0)
 			{
-				System.out.println("****Tail****\t\t :"+randNumber+"\n");
-				tailcount=tailcount+1;
+					System.out.println("Please enter valid input :");
+					no_of_times=scanner.nextInt();
+					HeadOrTail(no_of_times);
+			}
+			for(int i=0;i<no_of_times;i++)
+			{
+				double	randNumber = Math.random();
+				System.out.println("Random numbers are\t :"+randNumber);
+				if(randNumber<0.5)
+				{
+					System.out.println("****Tail****\t\t :"+randNumber+"\n");
+					tailcount=tailcount+1;
+				}
+				else
+				{
+					System.out.println("****Head****\t\t :"+randNumber+"\n");
+					headcount=headcount+1;
+				}
+			}
+			System.out.println("Total heads are :"+headcount);
+			System.out.println("Total tails are :"+tailcount);
+			
+			headpercentage = (headcount*100)/no_of_times;
+			System.out.println("Percetage of occurence of head is :"+headpercentage);
+			tailpercentage = (tailcount*100)/no_of_times;
+			System.out.println("Percetage of occurence of tail is :"+tailpercentage);
+			if(headpercentage>tailpercentage)
+			{
+				System.out.println("\n Head count is greater");
 			}
 			else
-			{
-				System.out.println("****Head****\t\t :"+randNumber+"\n");
-				headcount=headcount+1;
+				System.out.println("Tail count is greater ");
 			}
-		}
-		System.out.println("Total heads are :"+headcount);
-		System.out.println("Total tails are :"+tailcount);
-		
-		headpercentage = (headcount*100)/no_of_times;
-		System.out.println("Percetage of occurence of head is :"+headpercentage);
-		tailpercentage = (tailcount*100)/no_of_times;
-		System.out.println("Percetage of occurence of tail is :"+tailpercentage);
-		if(headpercentage>tailpercentage)
-		{
-			System.out.println("\n Head count is greater");
-		}
-		else
-			System.out.println("Tail count is greater ");
-		}
 	/*************************Leap Year ***************************/
-	int n;
+	
+		int n;
 	
 		/**This method check that entered year is leap 
 		 * year or not
-		 * 
 		 */
 		public void leap_year(int yearnumber)
 		{
@@ -161,6 +162,7 @@ public class Utility
 			else
 				System.out.println("\nIt is not leap year ");
 		}
+		
 	/***********************Power Of 2*****************************/
 		
 		/**This method Print the table of two till the range 
@@ -2046,7 +2048,7 @@ public class Utility
 		{
 			for(int j=0;j<rank.length;j++)
 			{
-				deckOfCards[index++]=rank[j]+" "+card[i];
+				deckOfCards[index++]=card[i]+" "+rank[j];
 			}
 		}
 		System.out.println("\n********Before shuffle******** ");
@@ -2111,58 +2113,42 @@ public class Utility
 		return distributedCards;
 	}
 
-	/*************************Deck of cards Queue******************************/
+
+	/*****************************Deck of cards Queue******************************/
 	
-	public String[][] deckOfCardsQueue(String[][] deckOfCards ,int noOfPlayers, int noOfCards)
+	public static void deckOfCardsQueue(String[][] distributedShuffle, int noOfPlayer, int noOfCards)
 	{
-		DeckOfCardsQLL queue = new DeckOfCardsQLL();
-		int cnt=1;
-		//String[] cards = new String[noOfCards];
-		/*for(int i=0; i < noOfPlayers;i++)
+		DeckOfCardsQLL queue = new DeckOfCardsQLL();	
+		String[] cards = new String[noOfCards];
+		for(int i = 0 ; i < noOfPlayer ; i++)			
 		{
-			for(int j=0;j<noOfCards;j++)
+			for(int j = 0 ; j < noOfCards;j++)
 			{
-				cards[j] = deckOfCards[i][j];
+				cards[j] = distributedShuffle[i][j];
 			}
-			cnt++;
-			queue.enqueue("Player "+(i+1)+" Cards");
+			queue.enqueue("Player"+(i+1)+"Cards");
+			//queue.show();
 			sortCards(cards);
-			System.out.println();
-		}*/
-		sortCards(deckOfCards);
-		return deckOfCards;
+		}
 	}
-	
-	public void sortCards(String[][] cardsArray)
+
+	private static void sortCards(String[] cards) 
 	{
 		DeckOfCardsQLL queue = new DeckOfCardsQLL();
-		int[] numberRank=new int[cards.length];
-		String[] deckOfCards= assignCards();
-		int j=0;
-		for(String cards: cardsArray)
+		char[] numberRank = {'2','3','4','5','6','7','8','9','0','J','Q','K','A'};
+		for(int i = 0 ; i<numberRank.length;i++)
 		{
-			for(int i=0; i<deckOfCards.length; i++)
+			for(int j = 0 ; j < cards.length;i++)
 			{
-				
-				if(card.equals(deckOfCards[i]))
+				String card = cards[j];
+				char cardRank = card.charAt(card.length()-1);
+				if(cardRank == numberRank[i])
 				{
-					numberRank[j++]=i;
+					queue.enqueue(card);
 				}
 			}
 		}
-		for(String card:cards)
-		{
-			for(int i=0; i<numberRank.length; i++)
-			{
-				card=deckOfCards[numberRank[i]];
-			}
-		}
-		for(int i=0;i<cards.length;i++)
-		{
-			System.out.print(cards[i]+"");
-		}
-		
-		//queue.show();
+		queue.show();
 	}
 }
 
