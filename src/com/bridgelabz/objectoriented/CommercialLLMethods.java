@@ -1,25 +1,33 @@
 package com.bridgelabz.objectoriented;
 
-import org.json.simple.parser.*;
 import java.io.File;
+
+
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import com.bridgelabz.datastructure.UnorderedLinkedList;
 import com.bridgelabz.utility.Utility;
 
-public class CommercialStockMethods 
+public class CommercialLLMethods
 {
 	Utility utility = new Utility();
+	LinkedList list ;
+	LinkedList list1 ;
 	Scanner scanner = new Scanner(System.in);
-	private String companyFilePath = "Company.json";
-	private String userFilePath = "UserStock.json";
-	private CommercialCompanyPojo companyPojo = new CommercialCompanyPojo();
-	
+	String companyFilePath = "Company.json";
+	String userFilePath = "UserStock.json";
+	CommercialCompanyPojo companyPojo = new CommercialCompanyPojo();
 	public void addDetails() throws Exception
 	{
 		System.out.println("Enter Whose details you want to add\n1.Company Stock\t2.User Deatils");
@@ -61,7 +69,7 @@ public class CommercialStockMethods
 		createCompanyJsonObj(companyPojo ,file);
 	}
 	@SuppressWarnings("unchecked")
-	public void createCompanyJsonObj(CommercialCompanyPojo companyPojo , File file) throws Exception
+	public void createCompanyJsonObj(CommercialCompanyPojo companyPojo ,File file) throws Exception
 	{
 		JSONParser parser = new JSONParser();		 
 		JSONObject jsonObj = (JSONObject)parser.parse(new FileReader(file));
@@ -161,7 +169,8 @@ public class CommercialStockMethods
 						int userIntStocks = Integer.parseInt(compareObj2.get("NoOfShare").toString());
 						int userSharePrice = Integer.parseInt(compareObj2.get("SharePrice").toString());
 						int companySharePrice = Integer.parseInt(compareObj1.get("SharePrice").toString());
-						
+						String stockSymbol = compareObj1.get("StockSymbol").toString();
+
 						int newUserShares = userIntStocks + stocksToBuy;
 						int newCompanyShares = companyIntStocks - stocksToBuy;
 						
@@ -169,6 +178,7 @@ public class CommercialStockMethods
 						int newStockCalculation = (priceOfEachShare * stocksToBuy);
 						int newComapnySharePrice=  companySharePrice + newStockCalculation ;						
 						int newUserSharePrice = userSharePrice - newStockCalculation;
+						
 						
 						if(companyIntStocks > stocksToBuy && userSharePrice > newStockCalculation)
 						{						
@@ -199,9 +209,42 @@ public class CommercialStockMethods
 		writeIntoFile(jsonObj2, userFilePath);
 	}
 	
+	public void linkedlist() throws Exception
+	{
+		list = new LinkedList();
+		list1 = new LinkedList();
+				
+		File file1 = new File(companyFilePath);
+		JSONParser parser1 = new JSONParser();
+		JSONObject jsonObj1 = (JSONObject)parser1.parse(new FileReader(file1));
+		JSONArray array1 = (JSONArray)jsonObj1.get("StockDetails");
+		
+		File file2 = new File(userFilePath);
+		JSONParser parser2 = new JSONParser();
+		JSONObject jsonObj2 = (JSONObject)parser2.parse(new FileReader(file2));
+		JSONArray array2 = (JSONArray)jsonObj2.get("UserDetails");
+		
+		JSONObject obj;
+		for(int i=0;i<array1.size();i++) 
+		{
+			obj = (JSONObject)array1.get(i);
+			String str = obj.get("NoOfShare").toString();
+			list.insert(str);
+		}	
+		list.show();
+		
+		for(int i = 0;i<array2.size();i++)
+		{
+			obj = (JSONObject)array2.get(i);
+			String str = obj.get("NoOfShare").toString();
+			list1.insert(str);
+		}
+		list1.show();
+	}
+	
 	@SuppressWarnings("unchecked")
 	public void sellStock() throws Exception
-	{
+	{		
 		File file1 = new File(companyFilePath);
 		JSONParser parser1 = new JSONParser();
 		JSONObject jsonObj1 = (JSONObject)parser1.parse(new FileReader(file1));
@@ -237,7 +280,8 @@ public class CommercialStockMethods
 					if(compareObj1.get("StockName").equals(stockName))
 					{
 						//isStockPresent = true;
-						System.out.println(compareObj1);						
+						System.out.println(compareObj1);	
+						
 						System.out.println("How many shares you wants to sell ? ");
 						int sellShares = utility.inputInteger();
 						
@@ -276,26 +320,26 @@ public class CommercialStockMethods
 					}
 				}	
 			}
-		}
-		
+		}		
+		/*
 		writeIntoFile(jsonObj1, companyFilePath);
-		writeIntoFile(jsonObj2, userFilePath);
-	}
-	
+		writeIntoFile(jsonObj2, userFilePath);*/
+	}	
 	public void printReport() throws Exception
 	{
+		CommercialLLMethods stock = new CommercialLLMethods();
 		System.out.println("Whose data you want to see\n1. Company\t2. User");
 		int reportchoice = utility.inputInteger();
 		switch (reportchoice) 
 		{
 		case 1:
-			printCompanyReport();						
+			stock.printCompanyReport();						
 			break;
 		case 2:
-			printUserReport();
+			stock.printUserReport();
 			break;
 		default:
-			break;
+			System.out.println("Invalid choice");
 		}		
 	}
 	public void  printCompanyReport() throws Exception

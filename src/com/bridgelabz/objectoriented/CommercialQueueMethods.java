@@ -1,19 +1,19 @@
 package com.bridgelabz.objectoriented;
 
-public class DeckOfCardsQLL
+public class CommercialQueueMethods 
 {
 	QueueNode front ;
 	QueueNode rear ;
-	public DeckOfCardsQLL()
+	public CommercialQueueMethods()
 	{
 		this.front = null;
 		this.rear = null;
 	}
 	int length = 0;
-	public void enqueue(String n) 
+	public void enqueue(String str) 
 	{
 		// TODO Auto-generated method stub		
-		QueueNode temp = new QueueNode(n, null,null);
+		QueueNode temp = new QueueNode(str, front, rear);
 		if(isEmpty())
 		{
 			front = temp;
@@ -27,7 +27,8 @@ public class DeckOfCardsQLL
 	}
 	
 	public void dequeue() 
-	{		
+	{
+		// TODO Auto-generated method stub		
 		QueueNode withdrawl ;
 		if(isEmpty())
 		{
@@ -38,13 +39,7 @@ public class DeckOfCardsQLL
 			withdrawl = front ;
 			front = withdrawl.next;
 		}		
-	}
-	
-	public String frontElement()
-	{
-		return front.data;		
-	}
-	
+	}	
 	public boolean isEmpty()
 	{
 		return length == 0;

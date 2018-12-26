@@ -2,17 +2,15 @@ package com.bridgelabz.objectoriented;
 
 import java.util.Scanner;
 
-import org.json.simple.JSONObject;
-
 import com.bridgelabz.utility.Utility;
 
-public class CommercialStock
+public class CommercialLL
 {
 	public static void main(String[] args) throws Exception 
-	{		
+	{
 		Scanner scanner = new Scanner(System.in);
 		Utility utility = new Utility();
-		CommercialStockMethods stock = new CommercialStockMethods();
+		CommercialLLMethods stock = new CommercialLLMethods();
 		char ch;
 		System.out.println("****Welcome to Stock Market****");
 		do
@@ -26,13 +24,17 @@ public class CommercialStock
 					break;
 				case 2 : 
 					stock.buyStock();
+					stock.linkedlist();
 					break;
 				case 3:
 					stock.sellStock();
+					stock.linkedlist();
 					break;
 				case 4 : 
-					stock.printReport();	
+					stock.printReport();
+					break;							
 				default :
+					System.out.println("Invalid Choice..!!!");
 					break;			
 			}
 			System.out.println("Do you wants to continue...(Y/N)");

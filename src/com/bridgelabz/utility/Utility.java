@@ -2048,7 +2048,7 @@ public class Utility
 		{
 			for(int j=0;j<rank.length;j++)
 			{
-				deckOfCards[index++]=card[i]+" "+rank[j];
+				deckOfCards[index++]=rank[j]+" "+card[i];
 			}
 		}
 		System.out.println("\n********Before shuffle******** ");
@@ -2113,42 +2113,56 @@ public class Utility
 		return distributedCards;
 	}
 
-
 	/*****************************Deck of cards Queue******************************/
 	
-	public static void deckOfCardsQueue(String[][] distributedShuffle, int noOfPlayer, int noOfCards)
+	public void deckOfCardsQueue(String[][] distributedShuffle, int noOfPlayer, int noOfCards) 
 	{
-		DeckOfCardsQLL queue = new DeckOfCardsQLL();	
+		DeckOfCardsQLL queue = new DeckOfCardsQLL();
 		String[] cards = new String[noOfCards];
-		for(int i = 0 ; i < noOfPlayer ; i++)			
+		for(int i= 0;i<noOfPlayer;i++)
 		{
-			for(int j = 0 ; j < noOfCards;j++)
+			for(int j=0;j<noOfCards;j++)
 			{
 				cards[j] = distributedShuffle[i][j];
 			}
-			queue.enqueue("Player"+(i+1)+"Cards");
-			//queue.show();
-			sortCards(cards);
-		}
-	}
-
-	private static void sortCards(String[] cards) 
-	{
-		DeckOfCardsQLL queue = new DeckOfCardsQLL();
-		char[] numberRank = {'2','3','4','5','6','7','8','9','0','J','Q','K','A'};
-		for(int i = 0 ; i<numberRank.length;i++)
-		{
-			for(int j = 0 ; j < cards.length;i++)
+			queue.enqueue("Player "+(i+1)+" Cards");
+			//sortCards(cards);
+			char[] numberRank = {'A','2','3','4','5','6','7','8','9','0','J','Q','K'};
+			for(i = 0 ; i < numberRank.length;i++)
 			{
-				String card = cards[j];
-				char cardRank = card.charAt(card.length()-1);
-				if(cardRank == numberRank[i])
+				for(int j = 0 ; j < cards.length ; j++)
 				{
-					queue.enqueue(card);
+					String card = cards[j];
+					char cardRank = card.charAt(card.length()-1);
+					if(cardRank == numberRank[i])
+					{
+						System.out.println(card);
+						queue.enqueue(card);
+					}
 				}
 			}
-		}
-		queue.show();
+			queue.show();
+		}		
 	}
+	
+//	public  void sortCards(String[] cards)
+//	{
+//		DeckOfCardsQLL queue = new DeckOfCardsQLL();
+//		char[] numberRank = {'A','2','3','4','5','6','7','8','9','0','J','Q','K'};
+//		for(int i = 0 ; i < numberRank.length;i++)
+//		{
+//			for(int j = 0 ; j < cards.length ; j++)
+//			{
+//				String card = cards[j];
+//				char cardRank = card.charAt(card.length()-1);
+//				if(cardRank == numberRank[i])
+//				{
+//					System.out.println(card);
+//					queue.enqueue(card);
+//					queue.show();
+//				}
+//			}
+//		}
+//	}
 }
 

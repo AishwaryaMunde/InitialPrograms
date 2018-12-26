@@ -1,6 +1,5 @@
 package com.bridgelabz.objectoriented;
 
-import org.json.simple.parser.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -10,15 +9,19 @@ import java.util.Scanner;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import com.bridgelabz.utility.Utility;
 
-public class CommercialStockMethods 
+public class CommercialStackMethods
 {
 	Utility utility = new Utility();
 	Scanner scanner = new Scanner(System.in);
 	private String companyFilePath = "Company.json";
 	private String userFilePath = "UserStock.json";
 	private CommercialCompanyPojo companyPojo = new CommercialCompanyPojo();
+	CommercialStackLLMethods stack ;
+	CommercialQueueMethods queue;
 	
 	public void addDetails() throws Exception
 	{
@@ -119,6 +122,8 @@ public class CommercialStockMethods
 	@SuppressWarnings("unchecked")
 	public void buyStock() throws Exception
 	{
+		stack = new CommercialStackLLMethods();
+		queue = new CommercialQueueMethods();
 		File file1 = new File(companyFilePath);
 		JSONParser parser1 = new JSONParser();
 		JSONObject jsonObj1 = (JSONObject)parser1.parse(new FileReader(file1));
@@ -176,11 +181,13 @@ public class CommercialStockMethods
 							compareObj2.remove("NoOfShare");
 							compareObj1.remove("SharePrice");
 							compareObj2.remove("SharePrice");
+							compareObj1.remove("StockSymbol");
 							
 							compareObj1.put("NoOfShare", newCompanyShares);
 							compareObj2.put("NoOfShare", newUserShares);
 							compareObj1.put("SharePrice", newComapnySharePrice);
 							compareObj2.put("SharePrice", newUserSharePrice);
+							compareObj1.put("StockSymbol", "Purchased");
 														
 							System.out.println(compareObj1);
 							System.out.println(compareObj2);
@@ -188,25 +195,42 @@ public class CommercialStockMethods
 							Date dateObj = new Date();
 	                        String date = new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a").format(dateObj);
 	                        System.out.println("Shares Buy Date & Time : " + date);
+	                        
+	                        JSONObject obj ;
+	                		for(i = 0 ; i< array1.size();i++)
+	                		{
+	                			obj = (JSONObject)array1.get(i);
+	                			String str = obj.get("StockSymbol").toString();
+	                			stack.push(str);
+	                		}
+	                		System.out.print("\nStack\t ");
+	                		stack.show();
+	                		System.out.print("Queue\t ");
+	                		queue.enqueue(date);
+	                		queue.show();	   
+	                		System.out.println();
 						}
 						else
 							System.out.println("Sorry.!!! Insufficient amount or shares not available....");
 					}
 				}
 			}
-		}
-		writeIntoFile(jsonObj1, companyFilePath);
-		writeIntoFile(jsonObj2, userFilePath);
+		}		
+//		writeIntoFile(jsonObj1, companyFilePath);
+//		writeIntoFile(jsonObj2, userFilePath);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void sellStock() throws Exception
 	{
+		stack = new CommercialStackLLMethods();
+		queue = new CommercialQueueMethods();
 		File file1 = new File(companyFilePath);
 		JSONParser parser1 = new JSONParser();
 		JSONObject jsonObj1 = (JSONObject)parser1.parse(new FileReader(file1));
 		JSONArray array1 = (JSONArray)jsonObj1.get("StockDetails"); 
-		System.out.println(array1);		
+		System.out.println(array1);
+		
 		File file2 = new File(userFilePath);
 		JSONParser parser2 = new JSONParser();
 		JSONObject jsonObj2 = (JSONObject)parser2.parse(new FileReader(file2));
@@ -260,11 +284,13 @@ public class CommercialStockMethods
 							compareObj2.remove("NoOfShare");
 							compareObj1.remove("SharePrice");
 							compareObj2.remove("SharePrice");
+							compareObj1.remove("StockSymbol");
 							
 							compareObj1.put("NoOfShare", newCompanyShares);
 							compareObj2.put("NoOfShare", newUserShares);
 							compareObj1.put("SharePrice", newCompanySharePrice);
 							compareObj2.put("SharePrice", newUserSharePrice);
+							compareObj1.put("StockSymbol", "Purchased");
 							
 							System.out.println(compareObj1);
 							System.out.println(compareObj2);					
@@ -272,14 +298,27 @@ public class CommercialStockMethods
 							Date dateObj = new Date();
 	                        String date = new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a").format(dateObj);
 	                        System.out.println("Shares Sell Date & Time : " + date);
+	                        
+	                		JSONObject obj;
+	                		for(i=0;i<array1.size();i++) 
+	                		{
+	                			obj  = (JSONObject)array1.get(i);
+	                			String str = obj.get("StockSymbol").toString();
+	                			stack.push(str);
+	                		}	
+	                		System.out.print("\nStack\t ");
+	                		stack.show();
+	                		System.out.print("Queue\t ");
+	                		queue.enqueue(date);
+	                		queue.show();	
+	                		System.out.println();
 						}
 					}
 				}	
 			}
 		}
-		
-		writeIntoFile(jsonObj1, companyFilePath);
-		writeIntoFile(jsonObj2, userFilePath);
+//		writeIntoFile(jsonObj1, companyFilePath);
+//		writeIntoFile(jsonObj2, userFilePath);
 	}
 	
 	public void printReport() throws Exception

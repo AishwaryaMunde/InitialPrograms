@@ -19,9 +19,7 @@ public class ClinicManagementMethods {
 
 	private static Scanner sc = new Scanner(System.in);
 	private String doctorFilePath="doctorsFile.json";
-	@SuppressWarnings("unused")
 	private String patientFilePath="PatientFile.json";
-	@SuppressWarnings("unused")
 	private String AppointmentPath="Appointment.json";
 	private  JSONObject docFileObj;
 	private  JSONArray docFileArr;
@@ -49,8 +47,7 @@ public class ClinicManagementMethods {
 		}
 	}
 	public void addDoc() throws IOException{
-		Scanner sc = new Scanner(System.in);
-		
+		Scanner sc = new Scanner(System.in);		
 		DoctorInfo doc = new DoctorInfo();
 		System.out.println("Enter doctor name :");
 		String docName = sc.nextLine();
@@ -79,8 +76,7 @@ public class ClinicManagementMethods {
 		writeIntoFile(doctorFilePath,docFileObj);
 	}
 	public void addJsonDoc() throws FileNotFoundException, IOException, ParseException {									///////////////////////new method
-		Scanner sc = new Scanner(System.in);
-		
+		Scanner sc = new Scanner(System.in);		
 		DoctorInfo doc = new DoctorInfo();
 		System.out.println("Enter doctor name :");
 		String docName = sc.nextLine();
@@ -129,7 +125,6 @@ public class ClinicManagementMethods {
 	}
 	public void patientAdd() throws IOException {
 		Scanner sc =new Scanner(System.in);
-		@SuppressWarnings("unused")
 		PatientIInfo patient = new PatientIInfo();
 		System.out.println("Enter patient name :");
 		String pName = sc.nextLine();
@@ -155,7 +150,6 @@ public class ClinicManagementMethods {
 	
 	public void addJsonPat() throws FileNotFoundException, IOException, ParseException {
 		Scanner sc =new Scanner(System.in);
-		@SuppressWarnings("unused")
 		PatientIInfo patient = new PatientIInfo();
 		System.out.println("Enter patient name :");
 		String pName = sc.nextLine();
@@ -185,7 +179,8 @@ public class ClinicManagementMethods {
 		outer.put("PatientDetails", jsonArr);
 		writeIntoFile(patientFilePath,outer);
 	}
-	public void appointment() throws FileNotFoundException, IOException, ParseException {
+	public void appointment() throws FileNotFoundException, IOException, ParseException
+	{
 		Scanner scan = new Scanner(System.in);
 		boolean flag;
 		String str[]=new String[15];
@@ -229,7 +224,8 @@ public class ClinicManagementMethods {
 			while(true) {
 				
 				patientAge = scan.nextLine();
-				if(patientAge!=null) {
+				if(patientAge!=null)
+				{
 					break;
 				}
 			}
@@ -242,7 +238,9 @@ public class ClinicManagementMethods {
 			}
 			takeAppointment(patientName,patientAge,visitTime,DocName);
 			System.out.println("Appointment is fix and noted in file successefully...");
-		}else {
+		}
+		else
+		{
 			System.out.println("Sorry this patient not present in patient file plz add first:");
 			System.out.println("would you like to enter another patient name :press Y/N");
 			char ch = sc.next().charAt(0);
@@ -329,7 +327,6 @@ public class ClinicManagementMethods {
 			appointFileArr.add(simple);
 			appointFileObj.put("Appointment", appointFileArr);
 			writeIntoFile(AppointmentPath,appointFileObj);
-
 		}else {
 			JSONParser parse = new JSONParser();
 			Object  obj =parse.parse(new FileReader(file));
@@ -343,13 +340,11 @@ public class ClinicManagementMethods {
 			jsonArr.add(simple);
 			appointFileObj.put("Appointment", jsonArr);
 			writeIntoFile(AppointmentPath,appointFileObj);
-		}
-			    
+		}			    
 	}
 	
-	public void search() throws FileNotFoundException, IOException, ParseException {
-		
-		
+	public void search() throws FileNotFoundException, IOException, ParseException 
+	{
 		System.out.println("1:To Doctor 2:To Patient");
 		int a = sc.nextInt();
 		
@@ -379,8 +374,8 @@ public class ClinicManagementMethods {
 				break;	
 		case 2:	System.out.println("1:By Name ,2:By Id ,3:By Mobile num");
 				int c=sc.nextInt();
-				switch(c) {
-				
+				switch(c) 
+				{				
 				case 1:System.out.println("Enter name of the patient ");
 					String name = sc.next();
 					patientSearch(name);
@@ -401,16 +396,16 @@ public class ClinicManagementMethods {
 			System.out.println("Enter correct choice please...");
 		}
 	}
-	public void docSearch(String choice1) throws FileNotFoundException, IOException, ParseException {
-		
+	public void docSearch(String choice1) throws FileNotFoundException, IOException, ParseException 
+	{		
 		File file  = new File(doctorFilePath);
 		JSONParser parse = new JSONParser();
 		Object obj = parse.parse(new FileReader(file));
 		JSONObject outer = (JSONObject) obj;
 		JSONArray jArr = (JSONArray) outer.get("DoctorList");
 		JSONObject compareObj;
-		for(int i=0;i<jArr.size();i++) {
-			
+		for(int i=0;i<jArr.size();i++)
+		{			
 			compareObj=(JSONObject) jArr.get(i);
 			String name = (String) compareObj.get("DoctorName");
 			String id = (String) compareObj.get("DocId");
@@ -419,8 +414,7 @@ public class ClinicManagementMethods {
 			if((name.equals(choice1))||(id.equals(choice1))||(speci.equals(choice1))){
 				System.out.println(compareObj);
 			}
-		}
-		
+		}		
 	}
 	public void patientSearch(String choice2) throws FileNotFoundException, IOException, ParseException {
 		File file  = new File(patientFilePath);
@@ -429,17 +423,17 @@ public class ClinicManagementMethods {
 		JSONObject outer = (JSONObject) obj;
 		JSONArray jArr = (JSONArray) outer.get("PatientDetails");
 		JSONObject compareObj;
-		for(int i=0;i<jArr.size();i++) {
-			
+		for(int i=0;i<jArr.size();i++)
+		{			
 			compareObj=(JSONObject) jArr.get(i);
 			String name = (String) compareObj.get("PatientName");
 			String id = (String) compareObj.get("PatientId");
 			String mob = (String) compareObj.get("PatientMob");
 			
-			if((name.equals(choice2))||(id.equals(choice2))||(mob.equals(choice2))){
+			if((name.equals(choice2))||(id.equals(choice2))||(mob.equals(choice2)))
+			{
 				System.out.println(compareObj);
 			}
 		}
-	}
-	
+	}	
 }
