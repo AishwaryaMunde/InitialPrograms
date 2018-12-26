@@ -10,10 +10,10 @@ public class DeckOfCardsQLL
 		this.rear = null;
 	}
 	int length = 0;
-	public void enqueue(String n) 
+	public void enqueue(String str) 
 	{
 		// TODO Auto-generated method stub		
-		QueueNode temp = new QueueNode(n, null,null);
+		QueueNode temp = new QueueNode(str, null,null);
 		if(isEmpty())
 		{
 			front = temp;
@@ -39,7 +39,6 @@ public class DeckOfCardsQLL
 			front = withdrawl.next;
 		}		
 	}
-	
 	public String frontElement()
 	{
 		return front.data;		
