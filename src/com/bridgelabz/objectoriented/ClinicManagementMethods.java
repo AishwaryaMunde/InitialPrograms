@@ -28,7 +28,8 @@ public class ClinicManagementMethods {
 	private  JSONObject appointFileObj;
 	private  JSONArray appointFileArr;
 	
-	public ClinicManagementMethods() {
+	public ClinicManagementMethods()
+	{
 		docFileObj =new JSONObject();
 		docFileArr =new JSONArray();
 		patientFileObj= new JSONObject();
@@ -211,7 +212,8 @@ public class ClinicManagementMethods {
 					System.out.println(" "+(j+1)+":Dr."+map.get(0).get(j)+" Visiting Time :"+map.get(1).get(j));
 					j++;
 				}
-			}catch(Exception e) {
+			}catch(Exception e) 
+			{
 			}
 			String patientAge=null; 
 			String visitTime=null;
@@ -290,7 +292,7 @@ public class ClinicManagementMethods {
 	    		list.add(specilization);
 	    	}
 	    }
-	    return list;
+	    return list;			
 	}
 	
 	public HashMap<Integer, ArrayList<String>> getDoctor(String Specialize) throws FileNotFoundException, IOException, ParseException {

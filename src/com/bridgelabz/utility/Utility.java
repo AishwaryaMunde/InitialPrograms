@@ -1854,7 +1854,6 @@ public class Utility
 				for(int i =0; i<queue.length;i++)
 				{
 					removed[i] = queue.removeAtFront();
-					//queue.displayFront();
 				}
 				for(int i =0; i<removed.length;i++)
 				{
@@ -1898,9 +1897,9 @@ public class Utility
 			}
 		 }
 
-  /***************************Object Oriented***************************/
+  /*******************************Object Oriented***************************/
 
- /******************************Inventory Details***********************/		 
+ /******************************Inventory Details***************************/		 
 		 
 	/**This method read the Json file data and print inventory details  
 	 * calculate value of each inventory details available in shop and print
@@ -1908,7 +1907,6 @@ public class Utility
 	 */
 	public void inventoryDetails()
 	{
-
 		JSONParser parser = new JSONParser();
 		try
 		{
@@ -1943,7 +1941,6 @@ public class Utility
 		    Object wheatsweight = jsonobj6.get("Weight").toString();
 		    System.out.println("\nTotal Wheats Stock   :"+Integer.parseInt( jsonobj5.get("Price").toString())*
 		    		(Integer.parseInt( jsonobj6.get("Weight").toString())));
-		  		      
 		}
 		catch(Exception e)
 		{
@@ -1953,9 +1950,8 @@ public class Utility
 	
 	/*******************Regex Pattern************************/
 	
-	/**This method find any perticular element in String using pattern matcher 
+	/**This method find any particular element in String using pattern matcher 
 	 * and replace it with another string or integer 
-	 * 
 	 */
 	public void patterMatching()
 	{
@@ -2022,7 +2018,6 @@ public class Utility
 			   totalValue=totalValue+total;
 			}
 			System.out.println("\nTotal value is:- "+totalValue);
-			
 		}
 		catch(Exception e)
 		{
