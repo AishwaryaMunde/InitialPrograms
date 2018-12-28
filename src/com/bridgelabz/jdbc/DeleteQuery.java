@@ -2,24 +2,23 @@ package com.bridgelabz.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
-public class CallableStatement 
+public class DeleteQuery 
 {
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		String url = "jdbc:mysql://localhost:3306/test";
 		String userName = "admin";
 		String password = "admin";
-		String query = "{call getAllData(?,?)}";
+		String query = "delete from student where Rollno=106";
 		try
 		{
-			Class.forName("com.mysql.jdbc.Driver");
 			Connection connection = DriverManager.getConnection(url, userName, password);
-			java.sql.CallableStatement callstmt =  connection.prepareCall(query);
-			callstmt.setInt(1, 106);
-			callstmt.setString(2,"John");
-			callstmt.execute();
-			System.out.println("Success");
-			callstmt.close();
+			PreparedStatement prepareStatement = connection.prepareStatement(query);
+			prepareStatement.executeUpdate();
+			System.out.println("record deleted");
+			prepareStatement.close();
 			connection.close();
 		}
 		catch(Exception e)

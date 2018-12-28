@@ -3,8 +3,8 @@ package com.bridgelabz.jdbc;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class PreparedStatement {
-
+public class PreparedStatementWithInsert 
+{
 	public static void main(String[] args) 
 	{
 		int Rollno = 106;

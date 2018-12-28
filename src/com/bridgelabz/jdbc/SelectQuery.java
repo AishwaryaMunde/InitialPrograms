@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class ExecuteQuery {
-
+public class SelectQuery
+{
 	public static void main(String[] args) 
 	{
 		String url = "jdbc:mysql://localhost:3306/test";
