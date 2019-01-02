@@ -25,5 +25,4 @@ public class UpdateQuery
 			System.out.println(e);
 		}
 	}
-
 }
